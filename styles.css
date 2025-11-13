@@ -1,0 +1,120 @@
+.bowlby-one-regular {
+  font-family: "Bowlby One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.jersey-25-regular {
+  font-family: "Jersey 25", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+}
+
+
+.workbench {
+  font-family: "Workbench", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "BLED" 0,
+    "SCAN" 0;
+}
+
+.jersey-10-regular {
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
+/* --- Headings --- */
+
+
+
+
+
+h1 {
+  color: rgb(129, 213, 255); /* bright blue */
+  text-align: center;
+  font-size: 90px;
+}
+
+
+
+h2 {
+  color: rgb(0, 204, 255); /* cyan-blue */
+  font-size: 60px;
+  margin: 35px 0; /* top & bottom spacing (adjust as needed) */
+}
+
+
+/* --- Body --- */
+body {
+  background-color: rgb(5, 10, 45); /* deep navy */
+}
+
+body * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Text --- */
+p {
+  font-family: Verdana, sans-serif;
+  font-size: 20px;
+  color: rgb(210, 230, 255);
+}
+
+/* --- Links --- */
+a {
+  color: rgb(142, 203, 255); /* soft light blue */
+  font-size: 40px;
+  text-decoration: none;
+  transition: color 0.15s ease, padding-left 0.1s ease;
+}
+
+/* --- Hover Animation --- */
+@keyframes A_Hover_Animation {
+  0%   {padding-left: 0px;}
+  100% {padding-left: 10px;}
+}
+
+a:hover {
+  animation-name: A_Hover_Animation;
+  animation-duration: 0.1s;
+  animation-timing-function: ease-out;
+  padding-left: 10px;
+  color: rgb(217, 241, 255); /* very light blue */
+}
+
+/* --- Optional: Glow effect for hover --- */
+a:hover {
+  text-shadow: 0 0 8px rgba(173, 216, 255, 0.6);
+}
+
+button {
+  border-radius: 12px;
+  background-color: rgb(87, 107, 125);
+  color: rgb(214, 229, 243);
+  font-size: 20px;
+  width: 200px;
+  height: 50px;
+}
+
+button:hover {
+  background-color: rgb(155, 195, 230);
+  color: rgb(56, 84, 110);
+}
+
+button:active {
+  color: rgb(41, 54, 66);
+}
+
+.SongPlace {
+  filter: grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(250%) brightness(90%);
+  transition: filter 1s ease; /* smooth fallback transition */
+}
+

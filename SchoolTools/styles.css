@@ -1,0 +1,76 @@
+.bowlby-one-regular {
+  font-family: "Bowlby One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.workbench {
+  font-family: "Workbench", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "BLED" 0,
+    "SCAN" 0;
+}
+
+
+
+.jersey-10-regular {
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+h1 {
+  color: rgb(243, 183, 17);
+  text-align: center;
+  font-size: 70px;
+
+}
+
+h2 {
+  color: rgb(237, 225, 46);
+  font-size: 60px;
+}
+
+
+body {
+  background-color: rgb(100, 5, 5);
+}
+
+body * {
+  position: relative;
+  z-index: 1;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+}
+
+a {
+  color: darkkhaki;
+  font-size: large;
+  font-size: 40px;
+
+}
+
+@keyframes A_Hover_Animation {
+    0%   {padding-left: 0px;}
+    100% {padding-left: 10px;}
+}
+
+
+a:hover {
+    animation-name: A_Hover_Animation;
+    animation-duration: 0.1s;
+    animation-timing-function: easeOutCirc;
+    padding-left: 10px;
+    color: rgb(232, 228, 173);
+  
+}
+
+
+/* Resize
