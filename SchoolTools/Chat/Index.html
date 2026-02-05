@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Nehor4y – chat tools</title>
+
+<!-- fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Workbench&family=Jersey+10&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: rgb(100,5,5);
+  --accent: rgb(243,183,17);
+  --accent2: rgb(237,225,46);
+  --link: darkkhaki;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: white;
+  font-family: "Jersey 10", sans-serif;
+}
+
+body * {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-gif {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1 {
+  font-family: "Bowlby One", sans-serif;
+  color: var(--accent);
+  text-align: center;
+  font-size: 70px;
+  margin: 40px 0 10px;
+}
+
+h2 {
+  font-family: "Workbench", sans-serif;
+  color: var(--accent2);
+  font-size: 55px;
+  margin-top: 60px;
+}
+
+.section {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(0,0,0,0.35);
+  border-radius: 18px;
+  padding: 25px;
+  margin: 25px 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+.step {
+  margin: 15px 0;
+  font-size: 26px;
+}
+
+.step span {
+  color: var(--accent);
+}
+
+a {
+  color: var(--link);
+  font-size: 32px;
+  text-decoration: none;
+}
+
+a:hover {
+  padding-left: 10px;
+  color: rgb(232,228,173);
+  transition: .15s ease;
+}
+
+.code {
+  background: rgba(0,0,0,.6);
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 22px;
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+img.preview {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+}
+
+#bookmarkBox {
+  position: relative;
+}
+
+#bookmarkBox pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+#copyBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255,255,255,.1);
+  border: none;
+  color: var(--accent2);
+  font-family: "Jersey 10", sans-serif;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+#copyBtn:hover {
+  opacity: 1;
+  background: rgba(255,255,255,.2);
+}
+
+</style>
+
+<script>
+const BOOKMARK_URL =
+  "https://raw.githubusercontent.com/nehor4y/site/refs/heads/main/SchoolTools/Chat/BOOKMARK.js";
+
+fetch(BOOKMARK_URL)
+  .then(r => r.text())
+  .then(t => {
+    document.getElementById("bookmarkText").textContent = t.trim();
+  })
+  .catch(() => {
+    document.getElementById("bookmarkText").textContent = "failed to load :<";
+  });
+
+document.getElementById("copyBtn").onclick = () => {
+  const text = document.getElementById("bookmarkText").textContent;
+  navigator.clipboard.writeText(text);
+  document.getElementById("copyBtn").textContent = "copied!";
+  setTimeout(() => (copyBtn.textContent = "copy"), 1200);
+};
+</script>
+
+</head>
+
+<body>
+
+<img class="bg-gif" src="https://i.pinimg.com/originals/a5/15/72/a515725d06f3156bf58c565d72dc9ab3.gif">
+
+<h1>Random tools you should know</h1>
+
+<div class="section">
+
+  <!-- CLIENT -->
+  <h2>Client (how to use the chat)</h2>
+  <div class="card">
+
+    <div class="step"><span>[1]</span> Install mkcert (one time only)</div>
+    <a href="install-mkcert.bat">Download mkcert installer</a>
+    <div class="step">Run it once, click yes, restart browser. done :D</div>
+
+    <div class="step"><span>[2]</span> Bookmarklet (auto loaded)</div>
+
+    <div class="code" id="bookmarkBox">
+      <button id="copyBtn">copy</button>
+      <pre id="bookmarkText">loading…</pre>
+    </div>
+
+    <div class="step"><span>[3]</span> Open any website and paste it into your browser URL bar</div>
+    <div class="step">Press <b>CTRL + Q</b> to toggle chat</div>
+
+  </div>
+
+  <!-- SERVER -->
+  <h2>Server hosting (LAN / school / local)</h2>
+  <div class="card">
+
+    <div class="step"><span>[1]</span> Download the server package</div>
+    <a href="https://github.com/nehor4y/site/raw/refs/heads/main/SchoolTools/Chat.rar">
+      Download Chat Server (.rar)
+    </a>
+
+    <div class="step"><span>[2]</span> Extract it anywhere</div>
+
+    <div class="step"><span>[3]</span> Run <b>RunServer.bat</b></div>
+    <div class="step">If Windows complains, allow firewall access</div>
+
+    <div class="step"><span>[4]</span> Your Copy the IP it gives you</div>
+
+    <div class="step"><span>[5]</span> Share your IP with friends</div>
+    <div class="code">wss://YOUR-IP:8765</div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
