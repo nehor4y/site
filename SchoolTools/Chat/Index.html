@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chat</title>
+<style>
+body {
+    margin:0;
+    height:100vh;
+    background:linear-gradient(135deg,#0f1220,#1a1f3a);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:system-ui;
+}
+#container {
+    width:90%;
+    max-width:800px;
+    height:90vh;
+    background:#12162b;
+    border-radius:16px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+}
+#topbar { padding:8px 14px; color:#7f8cff; cursor:pointer }
+#chat {
+    flex:1;
+    padding:16px;
+    overflow-y:auto;
+    color:#eaeaff;
+}
+.system {
+    margin-bottom:6px;
+    word-wrap:break-word;
+    overflow-wrap:anywhere;
+    white-space:pre-wrap;
+}
+img.chat-image {
+    max-width:100%;
+    max-height:300px;
+    border-radius:10px;
+    margin-top:6px;
+}
+#inputbar {
+    display:flex;
+}
+#textBox {
+    flex:1;
+    padding:14px;
+    border:none;
+    background:#1b2040;
+    color:white;
+}
+#fileBtn {
+    padding:14px;
+    background:#1b2040;
+    border:none;
+    color:white;
+    cursor:pointer;
+}
+        #overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 20, 0.8);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal {
+            background: #181d3a;
+            padding: 24px;
+            border-radius: 14px;
+            width: 90%;
+            max-width: 360px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        #modal h2 {
+            margin: 0 0 8px;
+            color: #fff;
+        }
+
+        #modal p {
+            margin: 0 0 16px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        #wsInput {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background: #222761;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        #connectBtn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #4b6bff;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #connectBtn:hover {
+            background: #5a7bff;
+        }
+
+        #error {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #ff6b6b;
+            display: none;
+        }
+</style>
+</head>
+
+<body>
+<div id="container">
+    <div id="topbar">Change server</div>
+    <div id="chat"></div>
+
+    <div id="inputbar">
+        <button id="fileBtn">📎</button>
+        <input id="textBox" disabled placeholder="Type a message...">
+    </div>
+
+    <div id="overlay">
+        <div id="modal">
+            <input id="wsInput" placeholder="wss://localhost:8765"><br><br>
+            <button id="connectBtn">Connect</button>
+        </div>
+    </div>
+</div>
+
+<input type="file" id="fileInput" hidden>
+
+<script>
+const chat = document.getElementById("chat");
+const input = document.getElementById("textBox");
+const overlay = document.getElementById("overlay");
+const wsInput = document.getElementById("wsInput");
+const fileInput = document.getElementById("fileInput");
+
+let socket;
+const colors = {};
+
+function colorFor(id){
+ if(colors[id])return colors[id];
+ let h=0; for(let c of id)h=c.charCodeAt(0)+((h<<5)-h);
+ return colors[id]=`hsl(${Math.abs(h)%360},80%,65%)`;
+}
+
+function log(t){
+ const d=document.createElement("div");
+ d.className="system";
+ d.textContent=t;
+ chat.appendChild(d);
+ chat.scrollTop=chat.scrollHeight;
+}
+
+function logMsg(id,txt){
+ const d=document.createElement("div");
+ d.className="system";
+ const n=document.createElement("span");
+ n.textContent=id;
+ n.style.color=colorFor(id);
+ n.style.fontWeight="600";
+ d.append(n,": "+txt);
+ chat.appendChild(d);
+ chat.scrollTop=chat.scrollHeight;
+}
+
+function connect(url){
+ socket=new WebSocket(url);
+ socket.onopen=()=>{
+   overlay.style.display="none";
+   input.disabled=false;
+ };
+ socket.onmessage=e=>{
+   const d=JSON.parse(e.data);
+   if(d.type==="message")logMsg(d.from,d.content);
+   if(d.type==="join")log(d.id+" joined");
+   if(d.type==="leave")log(d.id+" left");
+   if(d.type==="image"){
+     const img=document.createElement("img");
+     img.src="data:image/*;base64,"+d.data;
+     img.className="chat-image";
+     chat.appendChild(img);
+   }
+   if(d.type==="file"){
+        const a=document.createElement("a");
+    
+        a.href = `https://${location.hostname}:8766/media/${encodeURIComponent(d.name)}`;
+        a.textContent = "⬇ " + d.name;
+        a.download = d.name;
+        a.rel = "noopener";
+        chat.appendChild(a);
+   }
+ };
+}
+
+document.getElementById("connectBtn").onclick=()=>{
+ connect(wsInput.value.trim());
+};
+
+input.onkeydown=e=>{
+ if(e.key==="Enter"){
+  socket.send(input.value);
+  input.value="";
+ }
+};
+
+document.getElementById("fileBtn").onclick=()=>fileInput.click();
+
+fileInput.onchange=()=>{
+ const f=fileInput.files[0];
+ if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{
+  socket.send("__file__:"+JSON.stringify({
+   name:f.name,
+   image:f.type.startsWith("image/"),
+   data:r.result.split(",")[1]
+  }));
+ };
+ r.readAsDataURL(f);
+};
+</script>
+</body>
+</html>
