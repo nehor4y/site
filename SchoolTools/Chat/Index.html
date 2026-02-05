@@ -198,8 +198,8 @@ function connect(url){
    }
    if(d.type==="file"){
         const a=document.createElement("a");
-    
-        a.href = `https://${location.hostname}:8766/media/${encodeURIComponent(d.name)}`;
+
+        a.href = `https://${new URL(wsInput.value).hostname}:8766/media/${encodeURIComponent(d.name)}`;
         a.textContent = "⬇ " + d.name;
         a.download = d.name;
         a.rel = "noopener";
