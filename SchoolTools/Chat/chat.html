@@ -228,6 +228,11 @@ input.onkeydown=e=>{
 
 document.getElementById("fileBtn").onclick=()=>fileInput.click();
 
+document.getElementById("topbar").onclick=()=>{
+  overlay.style.display="flex"
+  input.disabled=true
+}
+
 fileInput.onchange=()=>{
  const f=fileInput.files[0];
  if(!f)return;
