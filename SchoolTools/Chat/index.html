@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Ch4t V2 – Guide</title>
 
+<!-- fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Workbench&family=Jersey+10&display=swap" rel="stylesheet">
@@ -21,6 +22,22 @@ body {
   background: var(--bg);
   color: white;
   font-family: "Jersey 10", sans-serif;
+}
+
+body * {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-gif {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
 }
 
 h1 {
@@ -77,16 +94,38 @@ a:hover {
   background: rgba(0,0,0,.6);
   padding: 15px;
   border-radius: 12px;
-  font-size: 20px;
-  margin-top: 10px;
+  font-size: 18px;
   white-space: pre-wrap;
   word-break: break-word;
+  position: relative;
+}
+
+#copyBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255,255,255,.1);
+  border: none;
+  color: var(--accent2);
+  font-family: "Jersey 10", sans-serif;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+#copyBtn:hover {
+  opacity: 1;
+  background: rgba(255,255,255,.2);
 }
 
 </style>
 
 </head>
 <body>
+
+<img class="bg-gif" src="https://i.pinimg.com/originals/a5/15/72/a515725d06f3156bf58c565d72dc9ab3.gif">
 
 <h1>Ch4t V2</h1>
 
@@ -113,6 +152,7 @@ a:hover {
     <div class="step"><span>[1]</span> Copy the code below</div>
 
     <div class="code" id="codeBox">
+      <button id="copyBtn">copy</button>
 (()=>{let f=document.createElement('iframe');let v=0;f.src='https://chat-v2-eet8.onrender.com/';f.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;border:0;z-index:999999;display:none';document.body.appendChild(f);document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.code==='KeyQ'){v=!v;f.style.display=v?'block':'none'}});})();
     </div>
 
@@ -121,11 +161,22 @@ a:hover {
     <div class="step"><span>[3]</span> Press Enter to run it</div>
 
     <div class="step"><span>[4]</span> Now press <b>Ctrl + Q</b> to toggle the chat overlay</div>
-    <div class="step"><span>[5]</span> In case of an emergency, go to the original page and press <b>ESC/b> which closes the chat IMMEDIATELY</div>
+
+    <div class="step"><span>[5]</span> In case of an emergency go to the original page and press <b>ESC</b> which closes the chat IMMEDIATELY</div>
 
   </div>
 
 </div>
+
+<script>
+const btn = document.getElementById('copyBtn');
+btn.onclick = () => {
+  const text = document.querySelector('.code').textContent.replace('copy','').trim();
+  navigator.clipboard.writeText(text);
+  btn.textContent = 'copied!';
+  setTimeout(()=>btn.textContent='copy',1200);
+};
+</script>
 
 </body>
 </html>
