@@ -153,7 +153,32 @@ a:hover {
 
     <div class="code" id="codeBox">
       <button id="copyBtn">copy</button>
-(()=>{let f=document.createElement('iframe');let v=0;f.src='https://chat-v2-eet8.onrender.com/';f.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;border:0;z-index:999999;display:none';document.body.appendChild(f);document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.code==='KeyQ'){v=!v;f.style.display=v?'block':'none'}});})();
+(()=>{let w=null;
+const url='https://chat-v2-eet8.onrender.com/';
+
+function openWin(){
+  if(!w || w.closed){
+    w=window.open(url,'chatv2','width=1200,height=800');
+  } else {
+    w.close();
+    w=null;
+  }
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey&&e.code==='KeyQ'&&!e.repeat){
+    e.preventDefault();
+    openWin();
+  }
+
+  if(e.code==='Escape'){
+    if(w && !w.closed){
+      w.close();
+      w=null;
+    }
+  }
+},true);
+})();    
     </div>
 
     <div class="step"><span>[2]</span> Paste it into your browser console (F12 → Console tab)</div>
