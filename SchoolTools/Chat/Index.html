@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Nehor4y – chat tools</title>
+<title>Ch4t V2 – Guide</title>
 
-<!-- fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Workbench&family=Jersey+10&display=swap" rel="stylesheet">
@@ -24,28 +23,12 @@ body {
   font-family: "Jersey 10", sans-serif;
 }
 
-body * {
-  position: relative;
-  z-index: 1;
-}
-
-.bg-gif {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  opacity: 0.1;
-  pointer-events: none;
-  z-index: 0;
-}
-
 h1 {
   font-family: "Bowlby One", sans-serif;
   color: var(--accent);
   text-align: center;
   font-size: 70px;
-  margin: 40px 0 10px;
+  margin: 40px 0;
 }
 
 h2 {
@@ -94,131 +77,52 @@ a:hover {
   background: rgba(0,0,0,.6);
   padding: 15px;
   border-radius: 12px;
-  font-size: 22px;
+  font-size: 20px;
   margin-top: 10px;
-  overflow-x: auto;
-}
-
-img.preview {
-  max-width: 100%;
-  border-radius: 12px;
-  margin-top: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.5);
-}
-
-#bookmarkBox {
-  position: relative;
-}
-
-#bookmarkBox pre {
-  margin: 0;
   white-space: pre-wrap;
-  word-break: break-all;
-}
-
-#copyBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(255,255,255,.1);
-  border: none;
-  color: var(--accent2);
-  font-family: "Jersey 10", sans-serif;
-  font-size: 18px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  opacity: 0.7;
-}
-
-#copyBtn:hover {
-  opacity: 1;
-  background: rgba(255,255,255,.2);
+  word-break: break-word;
 }
 
 </style>
 
-<script>
-const BOOKMARK_URL =
-  "https://raw.githubusercontent.com/nehor4y/site/refs/heads/main/SchoolTools/Chat/BOOKMARK.js";
-
-fetch(BOOKMARK_URL)
-  .then(r => r.text())
-  .then(t => {
-    document.getElementById("bookmarkText").textContent = t.trim();
-  })
-  .catch(() => {
-    document.getElementById("bookmarkText").textContent = "failed to load :<";
-  });
-
-document.getElementById("copyBtn").onclick = () => {
-  const text = document.getElementById("bookmarkText").textContent;
-  navigator.clipboard.writeText(text);
-  document.getElementById("copyBtn").textContent = "copied!";
-  setTimeout(() => (copyBtn.textContent = "copy"), 1200);
-};
-</script>
-
 </head>
-
 <body>
-
-<img class="bg-gif" src="https://i.pinimg.com/originals/a5/15/72/a515725d06f3156bf58c565d72dc9ab3.gif">
 
 <h1>Ch4t V2</h1>
 
 <div class="section">
 
-  <!-- CLIENT -->
-  <h2>Client (how to use the chat)</h2>
+  <!-- SECTION 1 -->
+  <h2>1. Use the Website</h2>
   <div class="card">
 
-    <div class="step"><span>[1]</span> Download the Ch4t package</div>
-    <a href="https://github.com/nehor4y/site/raw/refs/heads/main/SchoolTools/Chat/V2.zip">
-      Download Chat Server (.zip)
+    <div class="step"><span>[1]</span> Open the chat website:</div>
+
+    <a href="https://chat-v2-eet8.onrender.com/" target="_blank">
+      https://chat-v2-eet8.onrender.com/
     </a>
-    
-    <div class="step"><span>[2]</span> Run FindServer.bat, and click yes for admin prems</div>
 
-    
-    <div class="step"><span>[3]</span> If a server has been found, enter the index that correspond to the desired server</div>
+    <div class="step"><span>[2]</span> Once inside, press <b>Ctrl + Q</b> to toggle the chat overlay (if supported)</div>
 
-    <div class="step"><span>[4]</span> Enter the password the host has gave you and you're Linked!</div>
-
-    <div class="step"><span>[5]</span> Bookmarklet (auto loaded)</div>
-
-    <div class="code" id="bookmarkBox">
-      <button id="copyBtn">copy</button>
-      <pre id="bookmarkText">loading…</pre>
-    </div>
-
-    <div class="step"><span>[6]</span> Open any website and paste it into your browser URL bar</div>
-    <div class="step">Press <b>CTRL + Q</b> to toggle chat</div>
-    
-    <div class="step"><span>[7]</span> Enter the IP that has been shown in the Command Prompt in this format: </div>
-    <div class="code">wss://YOUR-IP:8765</div>
+    <div class="step"><span>[3]</span> Use it like a normal chat app in your browser</div>
 
   </div>
 
-  <!-- SERVER -->
-  <h2>Server hosting (LAN / school / local)</h2>
+  <!-- SECTION 2 -->
+  <h2>2. Bookmark / Console Method</h2>
   <div class="card">
 
-    <div class="step"><span>[1]</span> Download the Ch4t package</div>
-    <a href="https://github.com/nehor4y/site/raw/refs/heads/main/SchoolTools/Chat/V2.zip">
-      Download Chat Server (.zip)
-    </a>
+    <div class="step"><span>[1]</span> Copy the code below</div>
 
-    <div class="step"><span>[2]</span> Extract it anywhere</div>
+    <div class="code" id="codeBox">
+(()=>{let f=document.createElement('iframe');let v=0;f.src='https://chat-v2-eet8.onrender.com/';f.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;border:0;z-index:999999;display:none';document.body.appendChild(f);document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.code==='KeyQ'){v=!v;f.style.display=v?'block':'none'}});})();
+    </div>
 
-    <div class="step"><span>[3]</span> Run <b>RunServer.bat</b></div>
-    <div class="step">If Windows complains, allow firewall access</div>
+    <div class="step"><span>[2]</span> Paste it into your browser console (F12 → Console tab)</div>
 
-    <div class="step"><span>[4]</span> Enter a name for the server(This is the name that will be shown to others)</div>
-    
-    <div class="step"><span>[5]</span> Enter a password so unwanted people won't enter ;)</div>
-    
-    <div class="step"><span>[6]</span> And that's it! others can get linked and be in the chat</div>
+    <div class="step"><span>[3]</span> Press Enter to run it</div>
+
+    <div class="step"><span>[4]</span> Now press <b>Ctrl + Q</b> to toggle the chat overlay</div>
 
   </div>
 
@@ -226,8 +130,3 @@ document.getElementById("copyBtn").onclick = () => {
 
 </body>
 </html>
-
-
-
-
-
